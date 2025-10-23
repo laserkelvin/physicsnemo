@@ -380,6 +380,7 @@ class Driver(p.DriverProtocol):
             )
         else:
             self.optimizer = None
+            return
 
         if opt_cfg.scheduler_cls is not None and self.optimizer is not None:
             try:
@@ -396,7 +397,7 @@ class Driver(p.DriverProtocol):
         else:
             self.lr_scheduler = None
         # in the case where we want to reset optimizer states between active learning steps
-        if self.config.reset_optim_states:
+        if self.config.reset_optim_states and self.is_optimizer_configured:
             self._original_optim_state = deepcopy(self.optimizer.state_dict())
 
     @property
