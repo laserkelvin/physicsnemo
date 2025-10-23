@@ -20,6 +20,7 @@ from typing import Any
 
 import torch
 
+from physicsnemo.active_learning import registry
 from physicsnemo.active_learning.protocols import (
     DriverProtocol,
     LabelStrategy,
@@ -30,6 +31,7 @@ from physicsnemo.active_learning.protocols import (
 __all__ = ["ClassifierUQQuery", "DummyLabelStrategy"]
 
 
+@registry.register("ClassifierUQQuery")
 class ClassifierUQQuery(QueryStrategy):
     """
     This query strategy is representative of a more complex
@@ -71,7 +73,7 @@ class ClassifierUQQuery(QueryStrategy):
         unlabeled_indices = data._sample_indices()
         # grab all of the data that's currently not labeled and obtain
         # predictions from the model
-        unlabeled_coords, _ = data[unlabeled_indices]
+        unlabeled_coords = data.X_values[unlabeled_indices]
         unlabeled_coords = unlabeled_coords.to(model.device)
         model.eval()
         with torch.no_grad():
@@ -90,6 +92,7 @@ class ClassifierUQQuery(QueryStrategy):
         self.driver = driver
 
 
+@registry.register("DummyLabelStrategy")
 class DummyLabelStrategy(LabelStrategy):
     """
     Since we have labels for all of our data already, this label strategy
@@ -126,6 +129,7 @@ class DummyLabelStrategy(LabelStrategy):
         self.driver = driver
 
 
+@registry.register("F1Metrology")
 class F1Metrology(MetrologyStrategy):
     """
     While metrology is optional in the workflow, this provides observability
@@ -146,7 +150,7 @@ class F1Metrology(MetrologyStrategy):
         data = self.driver.train_datapool  # this can be any `DataPool`
         model.eval()
         indices = torch.arange(data.total_samples)
-        input_data, labels = data[indices]
+        input_data, labels = data.X_values[indices], data.y_values[indices]
         input_data = input_data.to(model.device)
         labels = labels.to(model.device)
         with torch.no_grad():
@@ -157,7 +161,7 @@ class F1Metrology(MetrologyStrategy):
         precision = self.precision(pred_labels, labels)
         recall = self.recall(pred_labels, labels)
         # compute the F1 score
-        f1 = 2 * (precision * recall) / (precision + recall)
+        f1 = 2 * (precision * recall) / (precision + recall + 1e-8)
         iteration = self.driver.active_learning_step_idx
         num_train_samples = len(self.driver.train_datapool.train_indices)
         report = {

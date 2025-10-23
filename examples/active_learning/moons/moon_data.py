@@ -128,6 +128,7 @@ class MoonsDataset(Dataset):
 
     def __getitem__(self, index: int) -> tuple[torch.Tensor, torch.Tensor]:
         """Retrieve a single coordinate-label pair from the dataset."""
-        x_val = self.X_values[index, :]
-        y_val = self.y_values[index]
+        actual_index = self.train_indices[index]
+        x_val = self.X_values[actual_index, :]
+        y_val = self.y_values[actual_index]
         return x_val, y_val
