@@ -54,7 +54,7 @@ def make_moons(n_samples: int = 2000, sigma: float = 0.25) -> torch.Tensor:
     # add some noise to the coordinates
     X_values += torch.randn_like(X_values) * sigma
     y_values = torch.zeros(n_samples)
-    y_values[inner_grid.shape[0] :] = 1
+    y_values[outer_grid.shape[0] :] = 1
     return X_values, y_values
 
 
