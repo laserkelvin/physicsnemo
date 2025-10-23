@@ -28,7 +28,7 @@ from physicsnemo.active_learning.protocols import (
     QueryStrategy,
 )
 
-__all__ = ["ClassifierUQQuery", "DummyLabelStrategy"]
+__all__ = ["ClassifierUQQuery", "DummyLabelStrategy", "F1Metrology"]
 
 
 @registry.register("ClassifierUQQuery")
