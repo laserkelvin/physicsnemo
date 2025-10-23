@@ -136,8 +136,8 @@ def main():
         ),
         # configure different times for initial training and subsequent
         # fine-tuning
-        max_training_epochs=10,
-        max_fine_tuning_epochs=5,
+        max_training_epochs=30,
+        max_fine_tuning_epochs=30,
         # this configures the training loop
         train_loop_fn=DefaultTrainingLoop(
             use_progress_bars=True,
