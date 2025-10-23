@@ -365,19 +365,24 @@ class DefaultTrainingLoop(p.TrainingLoop):
                 raise RuntimeError(
                     "Failed to create static capture for `train_step_fn`. "
                 ) from e
+        else:
+            train_step_fn = self.capture_functions[train_func_id]
         if not validate_step_fn:
             validate_step_fn = self.validate_step_fn
         if validate_step_fn:
             val_func_id = id(validate_step_fn)
-            try:
-                validate_step_fn = StaticCaptureEvaluateNoGrad(
-                    model=model, amp_type=self.amp_type, **self.capture_kwargs
-                )(validate_step_fn)
-                self.capture_functions[val_func_id] = validate_step_fn
-            except Exception as e:
-                raise RuntimeError(
-                    "Failed to create static capture for `validate_step_fn`. "
-                ) from e
+            if val_func_id not in self.capture_functions:
+                try:
+                    validate_step_fn = StaticCaptureEvaluateNoGrad(
+                        model=model, amp_type=self.amp_type, **self.capture_kwargs
+                    )(validate_step_fn)
+                    self.capture_functions[val_func_id] = validate_step_fn
+                except Exception as e:
+                    raise RuntimeError(
+                        "Failed to create static capture for `validate_step_fn`. "
+                    ) from e
+            else:
+                validate_step_fn = self.capture_functions[val_func_id]
         return train_step_fn, validate_step_fn
 
     def __call__(
