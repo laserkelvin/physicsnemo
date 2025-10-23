@@ -164,14 +164,6 @@ class ActiveLearningRegistry:
         --------
         >>> strategy = registry.construct("my_strategy", param1=42, param2="test")
         """
-        # Check if the class is registered
-        if cls_name not in self._registry:
-            available = ", ".join(self._registry.keys()) if self._registry else "none"
-            raise KeyError(
-                f"Protocol '{cls_name}' is not registered. "
-                f"Available protocols: {available}"
-            )
-
         cls = self.get_class(cls_name, module_path)
 
         # Validate arguments against the class signature
