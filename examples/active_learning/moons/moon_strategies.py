@@ -197,7 +197,7 @@ class F1Metrology(MetrologyStrategy):
         predicted_positives = (pred_labels == 0).sum().item()
         if predicted_positives == 0:
             return 0.0
-        return true_positives / predicted_positives
+        return true_positives / (predicted_positives + true_positives)
 
     @staticmethod
     def recall(pred_labels: torch.Tensor, true_labels: torch.Tensor) -> float:
