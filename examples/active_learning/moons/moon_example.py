@@ -141,6 +141,7 @@ def main():
         # this configures the training loop
         train_loop_fn=DefaultTrainingLoop(
             use_progress_bars=True,
+            enable_static_capture=False,
         ),
     )
     # this configuration packs all the strategy components together
