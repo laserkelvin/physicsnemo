@@ -467,7 +467,8 @@ class DefaultTrainingLoop(p.TrainingLoop):
         # if a device is specified, move the model
         if device and device != model.device:
             # not 100% sure this will trigger issues with the optimizer
-            model = model.to(self.device)
+            # but allows a potentially different device to be used
+            model = model.to(device)
         if self.enable_static_capture:
             # if static capture is enabled, we check for a cache hit based on
             # the incoming function IDs. If we miss, we then create new wrappers.
