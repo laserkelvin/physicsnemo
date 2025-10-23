@@ -170,7 +170,7 @@ def main():
     # just some sanity checks
     if not (
         len(dataset.train_indices)
-        == 50
+        == int(dataset.initial_samples * dataset.total_samples)
         + driver_config.max_active_learning_steps
         * strategy_config.query_strategies[0].max_samples
     ):
