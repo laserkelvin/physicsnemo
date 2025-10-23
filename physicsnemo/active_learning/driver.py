@@ -883,7 +883,7 @@ class Driver(p.DriverProtocol):
         # if we intend to train
         if not self.config.skip_training and not self.is_optimizer_configured:
             self.configure_optimizer()
-        if not self.config.skip_training and self.config.reset_optim_states:
+        if self.is_optimizer_configured and self.config.reset_optim_states:
             self.optimizer.load_state_dict(self._original_optim_state)
 
     def _get_phase_index(self, phase: p.ActiveLearningPhase | None) -> int:
