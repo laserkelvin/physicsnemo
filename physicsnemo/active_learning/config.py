@@ -201,7 +201,7 @@ class TrainingConfig:
             raise ValueError("train_loop_fn must be callable")
 
         # set the same value for fine tuning epochs if not provided
-        if not self.max_fine_tuning_epochs:
+        if self.max_fine_tuning_epochs is None:
             self.max_fine_tuning_epochs = self.max_training_epochs
 
     def to_dict(self) -> dict[str, Any]:
