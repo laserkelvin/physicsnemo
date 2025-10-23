@@ -37,13 +37,14 @@ from moon_strategies import ClassifierUQQuery, DummyLabelStrategy, F1Metrology
 from torch import nn
 
 from physicsnemo import ModelMetaData, Module
-from physicsnemo.active_learning import Driver
+from physicsnemo.active_learning import Driver, registry
 from physicsnemo.active_learning import config as c
 from physicsnemo.active_learning.loop import DefaultTrainingLoop
 
 torch.manual_seed(216167)
 
 
+@registry.register("MLP")
 class MLP(Module):
     """
     Define a trivial MLIP model that will classify a 2D coordinate
@@ -82,6 +83,7 @@ class MLP(Module):
 
 
 # this implements the `TrainingProtocol` interface
+@registry.register("training_step")
 def training_step(model: MLP, data: tuple[torch.Tensor, torch.Tensor]) -> torch.Tensor:
     """
     Implements the training logic for a single batch of data.
