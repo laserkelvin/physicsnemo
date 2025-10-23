@@ -39,8 +39,8 @@ from torch.optim import AdamW, Optimizer
 from torch.optim.lr_scheduler import _LRScheduler
 
 from physicsnemo.active_learning import protocols as p
+from physicsnemo.active_learning._registry import registry
 from physicsnemo.active_learning.loop import DefaultTrainingLoop
-from physicsnemo.active_learning.registry import registry
 from physicsnemo.distributed import DistributedManager
 
 

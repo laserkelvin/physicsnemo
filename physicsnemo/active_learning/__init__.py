@@ -13,3 +13,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from physicsnemo.active_learning._registry import registry
+from physicsnemo.active_learning.config import (
+    DriverConfig,
+    OptimizerConfig,
+    StrategiesConfig,
+    TrainingConfig,
+)
+from physicsnemo.active_learning.driver import Driver
+from physicsnemo.active_learning.loop import DefaultTrainingLoop
+
+__all__ = [
+    "registry",
+    "Driver",
+    "DefaultTrainingLoop",
+    "DriverConfig",
+    "OptimizerConfig",
+    "StrategiesConfig",
+    "TrainingConfig",
+]

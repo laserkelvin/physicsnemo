@@ -61,6 +61,6 @@ JSON-serializable.
 
 For classes and functions that are created at runtime, checkpointing requires
 that these components can be recreated when restarting from a checkpoint. To
-that end, the `registry` module provides a user-friendly way to instantiate
+that end, the `_registry` module provides a user-friendly way to instantiate
 objects: user-defined strategy classes can be added to the registry to enable
 their creation in checkpoint restarts.

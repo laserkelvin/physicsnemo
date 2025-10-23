@@ -17,7 +17,7 @@
 import pytest
 from torch import nn
 
-from physicsnemo.active_learning.registry import ActiveLearningRegistry
+from physicsnemo.active_learning._registry import ActiveLearningRegistry
 
 
 @pytest.fixture(scope="function")

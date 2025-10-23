@@ -24,7 +24,7 @@ import torch
 
 from physicsnemo import Module
 from physicsnemo.active_learning import protocols as p
-from physicsnemo.active_learning.registry import registry
+from physicsnemo.active_learning._registry import registry
 
 
 # Mock classes for testing serialization
